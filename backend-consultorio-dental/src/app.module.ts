@@ -7,6 +7,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { PrismaModule } from './infrastructure/prisma/prisma.module';
 import { CitasModule } from './modules/citas/citas.module';
 import { PacientesModule } from './modules/pacientes/pacientes.module';
+import { SecurityModule } from './modules/security/security.module';
+//import { APP_GUARD } from '@nestjs/core';
+//import { AuthGuard } from './modules/security/guards/auth.guard';
 
 @Module({
   imports: [
@@ -16,8 +19,17 @@ import { PacientesModule } from './modules/pacientes/pacientes.module';
     PrismaModule,
     CitasModule,
     PacientesModule,
+    SecurityModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    /*
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    },
+    */
+    AppService
+  ],
 })
 export class AppModule { }

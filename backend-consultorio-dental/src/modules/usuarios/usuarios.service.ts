@@ -91,4 +91,9 @@ export class UsuariosService {
             throw new BadRequestException(error.message);
         }
     }
+
+
+    async ObtenerUsuarioPorCorreoConContraseña(correo) {
+        return await this.repositorioUsuario.obtenerUsuarioPorCorreoConContraseña(correo);
+    }
 }

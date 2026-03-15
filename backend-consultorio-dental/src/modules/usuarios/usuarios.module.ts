@@ -3,11 +3,12 @@ import { UsuariosController } from './usuarios.controller';
 import { UsuariosService } from './usuarios.service';
 import { RepositorioUsuario } from './repositories/usuarios.repository';
 import { PacientesModule } from '../pacientes/pacientes.module';
+import { SecurityModule } from '../security/security.module';
 
 @Module({
   controllers: [UsuariosController],
   providers: [UsuariosService, RepositorioUsuario],
-  exports: [RepositorioUsuario],
-  imports: [PacientesModule]
+  exports: [UsuariosService],
+  imports: [PacientesModule, SecurityModule]
 })
 export class UsuariosModule {}
