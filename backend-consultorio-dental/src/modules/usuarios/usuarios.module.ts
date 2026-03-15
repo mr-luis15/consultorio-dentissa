@@ -7,7 +7,7 @@ import { PacientesModule } from '../pacientes/pacientes.module';
 @Module({
   controllers: [UsuariosController],
   providers: [UsuariosService, RepositorioUsuario],
-  exports: [RepositorioUsuario],
+  exports: [UsuariosService],
   imports: [PacientesModule]
 })
 export class UsuariosModule {}

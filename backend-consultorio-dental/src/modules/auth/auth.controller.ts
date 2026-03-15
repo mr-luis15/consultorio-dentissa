@@ -2,22 +2,22 @@ import { Body, Controller, Post, Get, Res } from '@nestjs/common';
 import type { IniciarSesionDto } from './dto/IniciarSesionDto';
 import type { Response } from 'express';
 import { AuthService } from './auth.service';
+import type { RegistrarUsuarioDto } from './dto/registrarUsuarioDto';
 
 @Controller('auth')
 export class AuthController {
 
     constructor(private authService : AuthService) {}
 
-    @Post()
+    @Post('iniciar-sesion')
     login(@Body() credenciales: IniciarSesionDto, @Res({ passthrough: true }) response: Response) {
         return this.authService.iniciar_sesion(credenciales, response);
     }  
 
-    /**
-     * TODO: Hacer un metodo exclusivo para 
-     * registrar usuarios pacientes desde la vantana
-     * de registrarse en el frontend
-     */
+    @Post('registrar')
+    register(@Body() registroDto: RegistrarUsuarioDto) {
+        return this.authService.registrarUsuario(registroDto);
+    }
 
     
     @Post('verificar-prueba')

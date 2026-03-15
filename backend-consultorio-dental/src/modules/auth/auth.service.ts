@@ -4,20 +4,22 @@ import { RepositorioUsuario } from 'src/modules/usuarios/repositories/usuarios.r
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt'
 import type { Response } from 'express';
-
+import { UsuariosService } from '../usuarios/usuarios.service';
+import { RegistrarUsuarioDto } from './dto/registrarUsuarioDto';
+import { Rol } from '../usuarios/enums/rol.enum';
 
 
 @Injectable()
 export class AuthService {
 
     constructor(
-        private repositorioUsuario: RepositorioUsuario,
+        private usuariosService: UsuariosService,
         private jwtService: JwtService
     ) { }
 
     async iniciar_sesion(credenciales: IniciarSesionDto, response: Response) {
 
-        const usuario = await this.repositorioUsuario.obtenerUsuarioPorCorreoConContraseña(credenciales.correo);
+        const usuario = await this.usuariosService.ObtenerUsuarioPorCorreoConContraseña(credenciales.correo);
 
         if (!usuario) {
             throw new NotFoundException('Este usuario no existe');
@@ -71,7 +73,14 @@ export class AuthService {
         return await this.jwtService.signAsync(payload);
     }
 
+    
     async verificar_token(credenciales: any) {
         return await this.jwtService.verifyAsync(credenciales.token);
+    }
+
+
+    async registrarUsuario(registroUsuario: RegistrarUsuarioDto) {
+        registroUsuario.rol = Rol.PACIENTE;
+        return await this.usuariosService.crearUsuario(registroUsuario);
     }
 }
